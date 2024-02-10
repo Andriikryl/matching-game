@@ -4,6 +4,9 @@
   let state: State = "start";
   let size = 20;
   let grid = createGrid();
+  let maxMatches = grid.length / 2;
+  let selected: number[] = [];
+  let matches: string[] = [];
   function createGrid() {
     // only want unique cards
     let cards = new Set<string>();
