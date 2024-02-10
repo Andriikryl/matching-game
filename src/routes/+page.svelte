@@ -26,6 +26,17 @@
   function shuffle<Items>(array: Items[]) {
     return array.sort(() => Math.random() - 0.5);
   }
+  function selectCard(cardIndex: number) {
+    selected = selected.concat(cardIndex);
+  }
+  function matchCards() {
+    const [first, second] = selected;
+
+    if (grid[first] === grid[second]) {
+      matches = matches.concat(grid[first]);
+    }
+    setTimeout(() => (selected = []), 300);
+  }
 </script>
 
 {#if state === "start"}
