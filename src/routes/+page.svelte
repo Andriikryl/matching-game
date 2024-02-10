@@ -37,6 +37,11 @@
     }
     setTimeout(() => (selected = []), 300);
   }
+  function gameWon() {
+    state = "won";
+  }
+  $: selected.length === 2 && matchCards();
+  $: maxMatches === matches.length && gameWon();
 </script>
 
 {#if state === "start"}
