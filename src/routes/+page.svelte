@@ -91,13 +91,12 @@
       <button
         class="card"
         class:selected={isSelected}
+        class:flip={isSelectedOrMatch}
         disabled={isSelectedOrMatch}
         on:click={() => selectCard(cardIndex)}
       >
-        <div class="matches">
-          {#each matches as match}
-            <div>{match}</div>
-          {/each}
+        <div class="back" class:match>
+          {card}
         </div>
       </button>
     {/each}
@@ -126,9 +125,24 @@
     width: 140px;
     font-size: 4rem;
     background-color: var(--bg-2);
+    transition: rotate 0.3s ease-out;
+    transform-style: preserve-3d;
 
     &.selected {
       border: 4px solid var(--border);
+    }
+    &.flip {
+      rotate: y 180deg;
+      pointer-events: none;
+    }
+
+    & .back {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      backface-visibility: hidden;
+      rotate: y 180deg;
     }
     & .match {
       transition: opacity 0.3s ease-out;
@@ -153,12 +167,7 @@
     text-transform: uppercase;
     cursor: pointer;
   }
-  .matches {
-    display: flex;
-    gap: 1rem;
-    margin-block: 2rem;
-    font-size: 3rem;
-  }
+
   .timer {
     transition: color 0.3s ease;
   }
