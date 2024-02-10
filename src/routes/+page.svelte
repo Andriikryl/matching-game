@@ -71,7 +71,25 @@
   }
   $: selected.length === 2 && matchCards();
   $: maxMatches === matches.length && gameWon();
+  function pauseGame(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      switch (state) {
+        case "playing":
+          state = "paused";
+          break;
+        case "paused":
+          state = "playing";
+          break;
+      }
+    }
+  }
 </script>
+
+<svelte:window on:keydown={pauseGame} />
+
+{#if state === "paused"}
+  <h1>Game paused</h1>
+{/if}
 
 {#if state === "start"}
   <h1>Matching game</h1>
