@@ -10,6 +10,16 @@
   let timerId: number | null = null;
   let time = 60;
 
+  function resetGame() {
+    timerId && clearInterval(timerId);
+    grid = createGrid();
+    maxMatches = grid.length / 2;
+    selected = [];
+    matches = [];
+    timerId = null;
+    time = 60;
+  }
+
   function startGameTimer() {
     function countdown() {
       state !== "paused" && (time -= 1);
@@ -18,6 +28,7 @@
   }
   function gameLost() {
     state = "lost";
+    resetGame();
   }
   $: if (state === "playing") {
     //	in case you pause the game
@@ -56,6 +67,7 @@
   }
   function gameWon() {
     state = "won";
+    resetGame();
   }
   $: selected.length === 2 && matchCards();
   $: maxMatches === matches.length && gameWon();
