@@ -7,6 +7,23 @@
   let maxMatches = grid.length / 2;
   let selected: number[] = [];
   let matches: string[] = [];
+  let timerId: number | null = null;
+  let time = 60;
+
+  function startGameTimer() {
+    function countdown() {
+      state !== "paused" && (time -= 1);
+    }
+    timerId = setInterval(countdown, 1000);
+  }
+  function gameLost() {
+    state = "lost";
+  }
+  $: if (state === "playing") {
+    //	in case you pause the game
+    !timerId && startGameTimer();
+  }
+  $: time === 0 && gameLost();
   function createGrid() {
     // only want unique cards
     let cards = new Set<string>();
@@ -50,6 +67,9 @@
 {/if}
 
 {#if state === "playing"}
+  <h1 class="timer" class:pulse={time <= 10}>
+    {time}
+  </h1>
   <div class="cards">
     {#each grid as card, cardIndex}
       {@const isSelected = selected.includes(cardIndex)}
@@ -126,5 +146,19 @@
     gap: 1rem;
     margin-block: 2rem;
     font-size: 3rem;
+  }
+  .timer {
+    transition: color 0.3s ease;
+  }
+
+  .pulse {
+    color: var(--pulse);
+    animation: pulse 1s infinite ease;
+  }
+
+  @keyframes pulse {
+    to {
+      scale: 1.4;
+    }
   }
 </style>
