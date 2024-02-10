@@ -62,7 +62,11 @@
         disabled={isSelectedOrMatch}
         on:click={() => selectCard(cardIndex)}
       >
-        <div class:match>{card}</div>
+        <div class="matches">
+          {#each matches as match}
+            <div>{match}</div>
+          {/each}
+        </div>
       </button>
     {/each}
   </div>
@@ -116,5 +120,11 @@
     border: none;
     text-transform: uppercase;
     cursor: pointer;
+  }
+  .matches {
+    display: flex;
+    gap: 1rem;
+    margin-block: 2rem;
+    font-size: 3rem;
   }
 </style>
