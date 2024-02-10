@@ -28,4 +28,27 @@
   }
 </script>
 
-<div>das</div>
+{#if state === "start"}
+  <h1>Matching game</h1>
+  <button on:click={() => (state = "playing")}> Play </button>
+{/if}
+
+{#if state === "playing"}
+  <div class="cards">
+    {#each grid as card, cardIndex}
+      <button class="card">
+        <div>{card}</div>
+      </button>
+    {/each}
+  </div>
+{/if}
+
+{#if state === "lost"}
+  <h1>You lost! 💩</h1>
+  <button on:click={() => (state = "playing")}> Play again </button>
+{/if}
+
+{#if state === "won"}
+  <h1>You win! 🎉</h1>
+  <button on:click={() => (state = "playing")}> Play again </button>
+{/if}
